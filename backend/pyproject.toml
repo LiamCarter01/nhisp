@@ -1,0 +1,17 @@
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["tests.py", "test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.isort]
+profile = "black"
+known_django = ["django"]
+known_drf = ["rest_framework"]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "known_django", "known_drf", "FIRSTPARTY", "LOCALFOLDER"]
