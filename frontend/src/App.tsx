@@ -12,6 +12,11 @@ import { ProtectedRoute } from './components';
 import Layout from './components/Layout';
 
 // -- Lazy loaded pages -------------------------------------------------------
+const PublicLayout = React.lazy(() => import('./features/public/PublicLayout'));
+const HomePage = React.lazy(() => import('./features/public/HomePage'));
+const ServicesPage = React.lazy(() => import('./features/public/ServicesPage'));
+const ContactPage = React.lazy(() => import('./features/public/ContactPage'));
+const PortalAccessPage = React.lazy(() => import('./features/public/PortalAccessPage'));
 const LoginPage = React.lazy(() => import('./features/auth/LoginPage'));
 const DashboardPage = React.lazy(() => import('./features/dashboard/DashboardPage'));
 const PoliciesPage = React.lazy(() => import('./features/policies/PoliciesPage'));
@@ -47,10 +52,15 @@ const App: React.FC = () => {
 
         <React.Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* Public Routes */}
+            <Route element={<PublicLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="portal-access" element={<PortalAccessPage />} />
+            </Route>
+
             <Route path="/login" element={<LoginPage />} />
 
-            {/* Protected Routes - wrapped in Layout */}
             <Route
               element={
                 <ProtectedRoute>
@@ -58,13 +68,10 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             >
-              {/* Dashboard - all authenticated users */}
               <Route path="/dashboard" element={<DashboardPage />} />
 
-              {/* Policies - all authenticated users */}
               <Route path="/policies" element={<PoliciesPage />} />
 
-              {/* Claims - Citizens */}
               <Route
                 path="/claims"
                 element={
@@ -82,7 +89,6 @@ const App: React.FC = () => {
                 }
               />
 
-              {/* Claims Review - Officers & Supervisors & Admin */}
               <Route
                 path="/claims/review"
                 element={
@@ -92,7 +98,6 @@ const App: React.FC = () => {
                 }
               />
 
-              {/* Supervisor Override */}
               <Route
                 path="/claims/override"
                 element={
@@ -102,7 +107,6 @@ const App: React.FC = () => {
                 }
               />
 
-              {/* Payments - Staff */}
               <Route
                 path="/payments"
                 element={
@@ -112,13 +116,10 @@ const App: React.FC = () => {
                 }
               />
 
-              {/* Providers - all authenticated */}
               <Route path="/providers" element={<ProvidersPage />} />
 
-              {/* Notifications - all authenticated */}
               <Route path="/notifications" element={<NotificationsPage />} />
 
-              {/* Admin - User Management */}
               <Route
                 path="/admin/users"
                 element={
@@ -129,8 +130,7 @@ const App: React.FC = () => {
               />
             </Route>
 
-            {/* Catch-all redirect */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </React.Suspense>
       </AuthProvider>
