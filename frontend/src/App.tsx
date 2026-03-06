@@ -23,6 +23,11 @@ const PaymentsPage = React.lazy(() => import('./features/payments/PaymentsPage')
 const NotificationsPage = React.lazy(() => import('./features/notifications/NotificationsPage'));
 const AdminUsersPage = React.lazy(() => import('./features/admin/AdminUsersPage'));
 const ProvidersPage = React.lazy(() => import('./features/providers/ProvidersPage'));
+const PublicLayout = React.lazy(() => import('./public/PublicLayout'));
+const HomePage = React.lazy(() => import('./public/HomePage'));
+const ServicesPage = React.lazy(() => import('./public/ServicesPage'));
+const ContactPage = React.lazy(() => import('./public/ContactPage'));
+const PortalAccessPage = React.lazy(() => import('./public/PortalAccessPage'));
 
 // -- Loading fallback --------------------------------------------------------
 const PageLoader = () => (
@@ -48,6 +53,12 @@ const App: React.FC = () => {
         <React.Suspense fallback={<PageLoader />}>
           <Routes>
             {/* Public Routes */}
+            <Route path="/" element={<PublicLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="portal" element={<PortalAccessPage />} />
+            </Route>
             <Route path="/login" element={<LoginPage />} />
 
             {/* Protected Routes - wrapped in Layout */}
@@ -130,7 +141,7 @@ const App: React.FC = () => {
             </Route>
 
             {/* Catch-all redirect */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </React.Suspense>
       </AuthProvider>
