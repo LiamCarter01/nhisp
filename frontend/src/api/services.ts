@@ -11,12 +11,16 @@ import type {
   ClaimCreateRequest,
   ClaimOverrideRequest,
   ClaimReviewRequest,
+  FeedbackStatus,
   LoginRequest,
   Notification,
   PaginatedResponse,
   Payment,
   Policy,
   Provider,
+  ProviderFeedback,
+  ProviderFeedbackCreateRequest,
+  ProviderFeedbackModerationRequest,
   RegisterRequest,
   TokenResponse,
   User,
@@ -157,4 +161,18 @@ export const providersApi = {
 
   update: (id: string, data: Partial<Provider>) =>
     apiClient.patch<Provider>(`/providers/${id}/`, data),
+};
+
+// ========================================
+// Provider Feedback
+// ========================================
+export const providerFeedbackApi = {
+  list: (params?: { provider?: string; status?: FeedbackStatus; page?: number }) =>
+    apiClient.get<PaginatedResponse<ProviderFeedback>>('/feedback/', { params }),
+
+  create: (data: ProviderFeedbackCreateRequest) =>
+    apiClient.post<ProviderFeedback>('/feedback/', data),
+
+  moderate: (id: string, data: ProviderFeedbackModerationRequest) =>
+    apiClient.post<ApiResponse<ProviderFeedback>>(`/feedback/${id}/moderate/`, data),
 };

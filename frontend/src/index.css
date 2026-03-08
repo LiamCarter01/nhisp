@@ -27,6 +27,10 @@
     @apply inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors;
   }
 
+  .btn-sm {
+    @apply text-xs px-3 py-1.5;
+  }
+
   .input-field {
     @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-gov-accent focus:ring-gov-accent sm:text-sm border px-3 py-2;
   }
