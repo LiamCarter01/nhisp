@@ -17,6 +17,11 @@ import type {
   Payment,
   Policy,
   Provider,
+  ProviderFeedbackCitizen,
+  ProviderFeedbackCreateRequest,
+  ProviderFeedbackManagement,
+  ProviderFeedbackPublic,
+  ProviderFeedbackStatus,
   RegisterRequest,
   TokenResponse,
   User,
@@ -157,4 +162,32 @@ export const providersApi = {
 
   update: (id: string, data: Partial<Provider>) =>
     apiClient.patch<Provider>(`/providers/${id}/`, data),
+
+  listFeedback: (params?: {
+    page?: number;
+    status?: ProviderFeedbackStatus;
+    provider?: string;
+  }) => {
+    const queryParams = Object.fromEntries(
+      Object.entries(params ?? {}).filter(([, value]) => value !== undefined && value !== ''),
+    );
+    return apiClient.get<PaginatedResponse<ProviderFeedbackManagement>>('/provider-feedback/', {
+      params: queryParams,
+    });
+  },
+
+  submitFeedback: (providerId: string, data: ProviderFeedbackCreateRequest) =>
+    apiClient.post<ApiResponse<ProviderFeedbackPublic>>(
+      `/providers/${providerId}/submit-feedback/`,
+      data,
+    ),
+
+  myFeedback: () =>
+    apiClient.get<ApiResponse<ProviderFeedbackCitizen[]>>('/providers/my-feedback/'),
+
+  moderateFeedback: (feedbackId: string, status: ProviderFeedbackStatus) =>
+    apiClient.post<ApiResponse<ProviderFeedbackManagement>>(
+      `/provider-feedback/${feedbackId}/moderate/`,
+      { status },
+    ),
 };

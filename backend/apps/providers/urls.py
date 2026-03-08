@@ -5,7 +5,8 @@ Provider URL Router
 
 from rest_framework.routers import DefaultRouter
 
-from apps.providers.views import ProviderViewSet
+from apps.providers.views import ProviderFeedbackViewSet, ProviderViewSet
 
 router = DefaultRouter()
 router.register(r"providers", ProviderViewSet, basename="provider")
+router.register(r"provider-feedback", ProviderFeedbackViewSet, basename="providerfeedback")
