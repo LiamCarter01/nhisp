@@ -23,6 +23,8 @@ const PaymentsPage = React.lazy(() => import('./features/payments/PaymentsPage')
 const NotificationsPage = React.lazy(() => import('./features/notifications/NotificationsPage'));
 const AdminUsersPage = React.lazy(() => import('./features/admin/AdminUsersPage'));
 const ProvidersPage = React.lazy(() => import('./features/providers/ProvidersPage'));
+const MyFeedbackPage = React.lazy(() => import('./features/providers/MyFeedbackPage'));
+const ProviderModerationPage = React.lazy(() => import('./features/providers/ProviderModerationPage'));
 
 // -- Loading fallback --------------------------------------------------------
 const PageLoader = () => (
@@ -114,6 +116,22 @@ const App: React.FC = () => {
 
               {/* Providers - all authenticated */}
               <Route path="/providers" element={<ProvidersPage />} />
+              <Route
+                path="/providers/my-feedback"
+                element={
+                  <ProtectedRoute allowedRoles={['Citizen']}>
+                    <MyFeedbackPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/providers/feedback/moderation"
+                element={
+                  <ProtectedRoute allowedRoles={['Admin', 'Supervisor', 'ClaimsOfficer']}>
+                    <ProviderModerationPage />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Notifications - all authenticated */}
               <Route path="/notifications" element={<NotificationsPage />} />

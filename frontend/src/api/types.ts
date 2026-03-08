@@ -131,6 +131,13 @@ export interface Payment {
 // ========================================
 // Provider
 // ========================================
+export interface ProviderFeedbackPublic {
+  id: string;
+  rating_score: number;
+  comment: string;
+  created_at: string;
+}
+
 export interface Provider {
   id: string;
   name: string;
@@ -143,6 +150,35 @@ export interface Provider {
   city: string;
   created_at: string;
   updated_at: string;
+  average_rating: string | null;
+  approved_feedback_count: number;
+  feedback_preview: ProviderFeedbackPublic[];
+}
+
+export interface ProviderFeedbackCreateRequest {
+  rating_score: number;
+  comment: string;
+}
+
+export type ProviderFeedbackStatus = 'Pending' | 'Approved' | 'Rejected';
+
+export interface ProviderFeedbackCitizen {
+  id: string;
+  provider: string;
+  provider_name: string;
+  rating_score: number;
+  comment: string;
+  status: ProviderFeedbackStatus;
+  created_at: string;
+  moderated_at: string | null;
+}
+
+export interface ProviderFeedbackManagement extends ProviderFeedbackCitizen {
+  citizen: string;
+  citizen_name: string;
+  citizen_email: string;
+  moderated_by: string | null;
+  moderated_by_name: string | null;
 }
 
 // ========================================

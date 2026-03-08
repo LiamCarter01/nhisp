@@ -49,6 +49,8 @@ const Layout: React.FC = () => {
     { label: 'Override Claims', path: '/claims/override', show: isSupervisor || isAdmin },
     { label: 'Payments', path: '/payments', show: isCitizen || isAdmin },
     { label: 'Providers', path: '/providers', show: true },
+    { label: 'My Feedback', path: '/providers/my-feedback', show: isCitizen },
+    { label: 'Feedback Moderation', path: '/providers/feedback/moderation', show: isOfficer || isSupervisor || isAdmin },
     { label: 'Manage Users', path: '/admin/users', show: isAdmin },
     { label: 'Notifications', path: '/notifications', show: true },
   ];
